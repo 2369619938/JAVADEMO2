@@ -1,11 +1,11 @@
 aliyun:
   file:
-  endpoint: http://oss-cn-hangzhou.aliyuncs.com
-  accessKeyId: LTAI4Fovzyr2Bqu9MptWJzTK
-  accessKeySecret: g5DucWzop3NYzpKJ3XhGlJSpk7h9lD
-  bucketHame: springshop
-  folder: upload
-  webUrL: htts://springshop.oss-cn-hangzhou.aliyuncs.com
+    endpoint: http://oss-cn-hangzhou.aliyuncs.com
+    accessKeyId: LTAI4Fovzyr2Bqu9MptWJzTK
+    accessKeySecret: g5DucWzop3NYzpKJ3XhGlJSpk7h9lD
+    bucketName: springshop
+    folder: upload
+    webUrl: https://springshop.oss-cn-hangzhou.aliyuncs.com
 
 spring:
   servlet:

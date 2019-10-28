@@ -3,10 +3,13 @@ package cn.hrk.spring.service.impl;
 import cn.hrk.common.domain.PageResult;
 import cn.hrk.spring.goods.domain.Brand;
 import cn.hrk.spring.mapper.BrandMapper;
+import cn.hrk.spring.oss.OssUtils;
 import cn.hrk.spring.service.IBrandService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -16,6 +19,7 @@ import java.util.Map;
 
 @Service
 public class BrandServiceImpl implements IBrandService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(BrandServiceImpl.class);
     @Autowired
     private BrandMapper brandMapper;
 
@@ -26,6 +30,7 @@ public class BrandServiceImpl implements IBrandService {
 
     @Override
     public PageResult<Brand> findPage(int page, int size) {
+        LOGGER.debug("AAAAA");
         PageHelper.startPage(page,size);
         List<Brand> brandpage=brandMapper.selectAll();
         PageInfo<Brand> pageInfo=new PageInfo<>(brandpage);
@@ -41,7 +46,8 @@ public class BrandServiceImpl implements IBrandService {
 
     @Override
     public PageResult<Brand> findPage(Map<String, Object> searchMap, int page, int size) {
-        Example example = createExample(searchMap) ;
+        LOGGER.debug("AAAAA");
+        Example example = createExample(searchMap);
         PageHelper.startPage(page,size);
         List<Brand> brandpage=brandMapper.selectByExample(example);
         PageInfo<Brand> pageInfo=new PageInfo<>(brandpage);
@@ -77,13 +83,14 @@ public class BrandServiceImpl implements IBrandService {
     private Example createExample(Map<String,Object> searchMap){
     Example example=new Example(Brand.class);
     Example.Criteria criteria = example.createCriteria();
+
     if(searchMap!=null){
     //品牌名称
-    if(searchMap.get("name")!=null && !"".equals(searchMap.get("nane"))){
-    criteria.andLike("name","%"+searchMap.get("nane")+"%");
+    if(searchMap.get("name")!=null && !"".equals(searchMap.get("name"))){
+    criteria.andLike("name","%"+searchMap.get("name")+"%");
     }
     //品牌图片地址
-    if(searchMap. get("image") !=null && !"".equals(searchMap. get("image"))){
+    if(searchMap. get("image") !=null && !"".equals(searchMap.get("image"))){
         criteria. andLike("image","%"+searchMap.get("image")+"%");
     }
     //品牌的首字母

@@ -2,11 +2,12 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="shop-service-brand" />
+        <module name="shop-service-goods" />
         <module name="spring-api-goods" />
         <module name="spring-commons-core" />
         <module name="spring-commons-oss" />
@@ -16,7 +17,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="shop-service-brand" target="1.8" />
+      <module name="shop-service-goods" target="1.8" />
       <module name="spring-api" target="1.8" />
       <module name="spring-api-goods" target="1.8" />
       <module name="spring-commons" target="1.8" />
@@ -31,7 +32,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="shop-service-brand" options="-parameters" />
+      <module name="shop-service-goods" options="-parameters" />
       <module name="spring-api-goods" options="-parameters" />
       <module name="spring-commons-core" options="-parameters" />
       <module name="spring-commons-oss" options="-parameters" />

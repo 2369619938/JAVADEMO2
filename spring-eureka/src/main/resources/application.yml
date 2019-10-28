@@ -9,5 +9,5 @@ eureka:
     service-url:
       #单机
       #设置与Eureka Server交 互的地址查询服务和注册服务都需要依赖这个地址(单机)。
-      def aultzone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
       #de fault Zone:http://eureka7 002.com: 7002/eur eka/ , http: //eureka7003. com : 7003/eureka/

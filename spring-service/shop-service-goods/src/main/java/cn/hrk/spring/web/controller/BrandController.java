@@ -3,10 +3,13 @@ package cn.hrk.spring.web.controller;
 import cn.hrk.common.domain.PageResult;
 import cn.hrk.common.domain.R;
 import cn.hrk.spring.goods.domain.Brand;
+import cn.hrk.spring.oss.FileR;
+import cn.hrk.spring.oss.OssUtils;
 import cn.hrk.spring.service.IBrandService;
 import cn.hrk.spring.service.impl.BrandServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -24,7 +27,7 @@ public class BrandController {
     }
     @GetMapping("/findPage")
     public PageResult<Brand> findPage(int page, int size) {
-        return brandService. findPage(page,size) ;
+        return brandService.findPage(page,size) ;
     }
     @PostMapping("/findList")
     public List<Brand> findList(@RequestBody Map<String,Object>searchMap) {
@@ -40,7 +43,7 @@ public class BrandController {
     }
     @PostMapping ("/add" )
     public R add (@RequestBody Brand brand) {
-        brandService . add( brand) ;
+        brandService.add( brand) ;
         return R.ok();
     }
     @PostMapping ("/update" )
@@ -52,6 +55,11 @@ public class BrandController {
     public R delete(@PathVariable("id") Integer id) {
         brandService.delete( id) ;
         return R.ok();
+    }
+    @PostMapping("upload")
+    public R upload(@RequestParam("file")MultipartFile file){
+        FileR fileR= OssUtils.upload(file);
+        return R.data(fileR);
     }
 
 }

@@ -2,7 +2,7 @@ server:
   port: 8002
 spring:
   application:
-    name: service-brand
+    name: service-goods
   #数据库连接信息
   datasource:
     name: test
@@ -56,3 +56,12 @@ logging:
       hrk:
         spring:
           mapper: debug
+
+aliyun:
+  file:
+    endpoint: http://oss-cn-hangzhou.aliyuncs.com
+    accessKeyId: LTAI4Fovzyr2Bqu9MptWJzTK
+    accessKeySecret: g5DucWzop3NYzpKJ3XhGlJSpk7h9lD
+    bucketName: springshop
+    folder: upload
+    webUrl: https://springshop.oss-cn-hangzhou.aliyuncs.com
