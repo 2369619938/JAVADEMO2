@@ -1,0 +1,14 @@
+aliyun:
+  file:
+  endpoint: http://oss-cn-hangzhou.aliyuncs.com
+  accessKeyId: LTAI4Fovzyr2Bqu9MptWJzTK
+  accessKeySecret: g5DucWzop3NYzpKJ3XhGlJSpk7h9lD
+  bucketHame: springshop
+  folder: upload
+  webUrL: htts://springshop.oss-cn-hangzhou.aliyuncs.com
+
+spring:
+  servlet:
+    nultipart:
+      max-file size: 1MB
+      max-request- size: 1MB
