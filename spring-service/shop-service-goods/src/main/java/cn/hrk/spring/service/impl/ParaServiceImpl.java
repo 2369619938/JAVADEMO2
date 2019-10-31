@@ -1,11 +1,10 @@
 package cn.hrk.spring.service.impl;
 
 import cn.hrk.common.domain.PageResult;
-import cn.hrk.spring.goods.domain.Brand;
-import cn.hrk.spring.goods.domain.Category;
-import cn.hrk.spring.goods.domain.Para;
+import cn.hrk.spring.goods.domain.*;
 import cn.hrk.spring.mapper.BrandMapper;
 import cn.hrk.spring.mapper.ParaMapper;
+import cn.hrk.spring.mapper.TemplateMapper;
 import cn.hrk.spring.service.IParaService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -20,7 +19,8 @@ import java.util.Map;
 public class ParaServiceImpl implements IParaService {
     @Autowired
     private ParaMapper paraMapper;
-
+    @Autowired
+    private TemplateMapper templateMapper;
     @Override
     public List<Para> findAll() {
         return paraMapper.selectAll();
@@ -59,6 +59,9 @@ public class ParaServiceImpl implements IParaService {
     @Override
     public void add(Para para) {
         paraMapper.insertUseGeneratedKeys(para);
+        Template template=templateMapper.selectByPrimaryKey(para.getTemplateId());
+        template.setSpecNum(template.getSpecNum()+1);
+        templateMapper.updateByPrimaryKey(template);
     }
 
     @Override
@@ -68,7 +71,12 @@ public class ParaServiceImpl implements IParaService {
 
     @Override
     public void delete(Integer id) {
+
+        Para para=paraMapper.selectByPrimaryKey(id);
         paraMapper.deleteByPrimaryKey(id);
+        Template template=templateMapper.selectByPrimaryKey(para.getTemplateId());
+        template.setSpecNum(template.getSpecNum()-1);
+        templateMapper.updateByPrimaryKey(template);
     }
 
     /*
@@ -77,30 +85,22 @@ public class ParaServiceImpl implements IParaService {
      *@return
      */
     private Example createExample(Map<String,Object> searchMap){
-        Example example=new Example(Brand.class);
+        Example example=new Example(Para.class);
         Example.Criteria criteria = example.createCriteria();
-//        if(searchMap!=null){
-//            //品牌名称
-//            if(searchMap.get("name")!=null && !"".equals(searchMap.get("nane"))){
-//                criteria.andLike("name","%"+searchMap.get("nane")+"%");
-//            }
-//            //品牌图片地址
-//            if(searchMap. get("image") !=null && !"".equals(searchMap. get("image"))){
-//                criteria. andLike("image","%"+searchMap.get("image")+"%");
-//            }
-//            //品牌的首字母
-//            if(searchMap. get("letter")!=null && !"".equals(searchMap.get("letter"))){
-//                criteria. andLike("letter","%"+searchMap.get("letter")+"%");
-//            }
-//            //品牌id
-//            if(searchMap.get("id")!=null ){
-//                criteria. andEqualTo("id", searchMap.get("id"));
-//            }
-//            //排序
-//            if(searchMap.get("seq") !=null ){
-//                criteria. andEqualTo("seq",searchMap.get("seq"));
-//            }
-//        }
+        if(searchMap!=null){
+            //规格父id
+            if(searchMap.get("templateId")!=null && !"".equals(searchMap.get("templateId"))){
+                criteria. andEqualTo("templateId", searchMap.get("templateId"));
+            }
+            //规格名称
+            if(searchMap.get("name")!=null && !"".equals(searchMap.get("name"))){
+                criteria.andLike("name","%"+searchMap.get("name")+"%");
+            }
+            //规格选项
+            if(searchMap. get("options") !=null && !"".equals(searchMap. get("options"))){
+                criteria. andLike("options","%"+searchMap.get("options")+"%");
+            }
+        }
         return example;
     }
 }

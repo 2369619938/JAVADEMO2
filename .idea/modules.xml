@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/spring-service/shop-service-goods/shop-service-brand.iml" filepath="$PROJECT_DIR$/spring-service/shop-service-goods/shop-service-brand.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-service/shop-service-goods/shop-service-goods.iml" filepath="$PROJECT_DIR$/spring-service/shop-service-goods/shop-service-goods.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-api/spring-api.iml" filepath="$PROJECT_DIR$/spring-api/spring-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-api/spring-api-goods/spring-api-goods.iml" filepath="$PROJECT_DIR$/spring-api/spring-api-goods/spring-api-goods.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-commons/spring-commons.iml" filepath="$PROJECT_DIR$/spring-commons/spring-commons.iml" />

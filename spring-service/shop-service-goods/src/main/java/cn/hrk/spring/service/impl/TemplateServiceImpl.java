@@ -79,28 +79,12 @@ public class TemplateServiceImpl implements ITemplateService {
     private Example createExample(Map<String,Object> searchMap){
         Example example=new Example(Template.class);
         Example.Criteria criteria = example.createCriteria();
-//        if(searchMap!=null){
-//            //品牌名称
-//            if(searchMap.get("name")!=null && !"".equals(searchMap.get("nane"))){
-//                criteria.andLike("name","%"+searchMap.get("nane")+"%");
-//            }
-//            //品牌图片地址
-//            if(searchMap. get("image") !=null && !"".equals(searchMap. get("image"))){
-//                criteria. andLike("image","%"+searchMap.get("image")+"%");
-//            }
-//            //品牌的首字母
-//            if(searchMap. get("letter")!=null && !"".equals(searchMap.get("letter"))){
-//                criteria. andLike("letter","%"+searchMap.get("letter")+"%");
-//            }
-//            //品牌id
-//            if(searchMap.get("id")!=null ){
-//                criteria. andEqualTo("id", searchMap.get("id"));
-//            }
-//            //排序
-//            if(searchMap.get("seq") !=null ){
-//                criteria. andEqualTo("seq",searchMap.get("seq"));
-//            }
-//        }
+        if(searchMap!=null){
+            //品牌名称
+            if(searchMap.get("name")!=null && !"".equals(searchMap.get("name"))){
+                criteria.andLike("name","%"+searchMap.get("name")+"%");
+            }
+        }
         return example;
     }
 }
