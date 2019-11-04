@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -38,6 +39,9 @@ public class OssUtils {
         }
         return "image/jpeg";
     }
+
+
+
 
     public static FileR upload(File file) {
         LOGGER.info("OSS文件上传开始:" + file.getName());
@@ -77,6 +81,51 @@ public class OssUtils {
         }
         return null;
     }
+    public static FileR upload(List<MultipartFile> files){
+        LOGGER.info("OSS文件上传开始");
+        String imgsPath="";
+        String imgsWebUrl = "";
+
+        FileR fileResult = null;
+        if (files !=null && files.size() >0){
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            String dateStr = format.format(new Date());
+
+            fileResult = new FileR(
+                    null,
+                    null,
+                    null,
+                    null,
+                    BUCKET_NAME,
+                    null,
+                    FILE_DIR
+            );
+            for (int i=0;i<files.size();i++){
+                MultipartFile file = files.get(i);
+                String originalFilename = file.getOriginalFilename();
+                String suffix = file.getName().substring(file.getName().lastIndexOf(".")+1).toLowerCase();
+
+                String fileUrl = FILE_DIR+"/"+(dateStr+"/"+UUID.randomUUID().toString().replace("-","")+"-"+originalFilename);
+                PutObjectResult result = null;
+                try {
+                    result = uploadFileOSS(file.getInputStream(),fileUrl);
+                    if(result !=null){
+                        imgsPath+= i==0?fileUrl:"," + fileUrl;
+                        imgsWebUrl+= i==0?WEB_URL+"/"+fileUrl:","+WEB_URL+"/"+fileUrl;
+                        System.out.println(i);
+                        System.out.println(i+":"+imgsWebUrl);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            System.out.println(imgsWebUrl);
+            fileResult.setFileAPUrl(imgsPath);
+            fileResult.setWebUrl(imgsWebUrl);
+        }
+        return fileResult;
+    }
+
     public static FileR upload(MultipartFile file){
         LOGGER.info("OSS文件上传开始:" + file.getName());
         FileR fileR=null;
@@ -88,8 +137,6 @@ public class OssUtils {
 
         //创建文件路径
         String fileUrl = FILE_DIR + "/" + (dateStr + "/" + UUID.randomUUID().toString().replace("-", "") + "-" + originalFilename);
-        System.out.println(file.getName());
-        System.out.println(fileUrl);
         PutObjectResult result=null;
 
         try {

@@ -4,10 +4,13 @@ import cn.hrk.common.domain.PageResult;
 import cn.hrk.common.domain.R;
 import cn.hrk.spring.goods.domain.Album;
 import cn.hrk.spring.goods.domain.Brand;
+import cn.hrk.spring.oss.FileR;
+import cn.hrk.spring.oss.OssUtils;
 import cn.hrk.spring.service.IAlbumService;
 import cn.hrk.spring.service.IBrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -52,5 +55,15 @@ public class AlbumController {
     public R delete(@PathVariable("id") Integer id) {
         albumService.delete( id) ;
         return R.ok();
+    }
+    @PostMapping("upload")
+    public R upload(@RequestParam("file")MultipartFile file){
+        FileR fileR= OssUtils.upload(file);
+        return R.data(fileR);
+    }
+    @PostMapping("uploads")
+    public R uploads(@RequestParam("file")List<MultipartFile> file){
+        FileR fileR= OssUtils.upload(file);
+        return R.data(fileR);
     }
 }

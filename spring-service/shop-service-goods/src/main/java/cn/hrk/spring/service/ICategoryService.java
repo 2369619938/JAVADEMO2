@@ -14,5 +14,5 @@ public interface ICategoryService {
     public Category findById(Integer id) ;
     public void add ( Category category) ;
     public void update(Category category);
-    public void delete(Integer id);
+    public int delete(Integer id);
 }

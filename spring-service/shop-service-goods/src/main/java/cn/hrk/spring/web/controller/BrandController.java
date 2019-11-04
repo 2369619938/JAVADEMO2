@@ -61,5 +61,11 @@ public class BrandController {
         FileR fileR= OssUtils.upload(file);
         return R.data(fileR);
     }
+    @PostMapping("uploads")
+    public R uploads(@RequestParam("file")List<MultipartFile> file){
+        FileR fileR= OssUtils.upload(file);
+        return R.data(fileR);
+    }
+
 
 }

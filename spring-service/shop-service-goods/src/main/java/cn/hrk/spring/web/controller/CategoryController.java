@@ -48,7 +48,9 @@ public class CategoryController {
     }
     @GetMapping("/delete/{id}")
     public R delete(@PathVariable("id") Integer id) {
-        categoryService.delete( id) ;
+       if (categoryService.delete( id)>0){
         return R.ok();
+       }
+       return R.error(400,"存在子分类");
     }
 }

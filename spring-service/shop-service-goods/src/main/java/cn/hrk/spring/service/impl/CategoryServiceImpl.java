@@ -66,8 +66,15 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public void delete(Integer id) {
-        categoryMapper.deleteByPrimaryKey(id);
+    public int delete(Integer id) {
+        Example example=new Example(Category.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("parentId", id);
+        List<Category> categories= categoryMapper.selectByExample( example) ;
+        if (categories.size()>0){
+            return 0;
+        }
+       return categoryMapper.deleteByPrimaryKey(id);
     }
 
 
