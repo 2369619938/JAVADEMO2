@@ -3,9 +3,12 @@ package cn.hrk.spring.web.controller;
 import cn.hrk.common.domain.PageResult;
 import cn.hrk.common.domain.R;
 import cn.hrk.spring.goods.domain.Sku;
+import cn.hrk.spring.oss.FileR;
+import cn.hrk.spring.oss.OssUtils;
 import cn.hrk.spring.service.ISkuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -50,5 +53,15 @@ public class SkuController {
     public R delete(@PathVariable("id") Integer id) {
         skuService.delete( id) ;
         return R.ok();
+    }
+    @PostMapping("upload")
+    public R upload(@RequestParam("file") MultipartFile file){
+        FileR fileR= OssUtils.upload(file);
+        return R.data(fileR);
+    }
+    @PostMapping("uploads")
+    public R uploads(@RequestParam("file")List<MultipartFile> file){
+        FileR fileR= OssUtils.upload(file);
+        return R.data(fileR);
     }
 }

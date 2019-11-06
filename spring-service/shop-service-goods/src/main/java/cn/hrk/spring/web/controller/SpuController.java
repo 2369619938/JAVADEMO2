@@ -2,10 +2,14 @@ package cn.hrk.spring.web.controller;
 
 import cn.hrk.common.domain.PageResult;
 import cn.hrk.common.domain.R;
+import cn.hrk.spring.goods.domain.Goods;
 import cn.hrk.spring.goods.domain.Spu;
+import cn.hrk.spring.oss.FileR;
+import cn.hrk.spring.oss.OssUtils;
 import cn.hrk.spring.service.ISpuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -41,6 +45,12 @@ public class SpuController {
         spuService.add(Spu) ;
         return R.ok();
     }
+    @PostMapping ("/save" )
+    public R save (@RequestBody Goods goods) {
+        spuService.saveGoods(goods);
+        return R.ok();
+    }
+
     @PostMapping ("/update" )
     public R update(@RequestBody Spu Spu) {
         spuService.update(Spu);
@@ -50,5 +60,15 @@ public class SpuController {
     public R delete(@PathVariable("id") Integer id) {
         spuService.delete( id) ;
         return R.ok();
+    }
+    @PostMapping("upload")
+    public R upload(@RequestParam("file") MultipartFile file){
+        FileR fileR= OssUtils.upload(file);
+        return R.data(fileR);
+    }
+    @PostMapping("uploads")
+    public R uploads(@RequestParam("file")List<MultipartFile> file){
+        FileR fileR= OssUtils.upload(file);
+        return R.data(fileR);
     }
 }

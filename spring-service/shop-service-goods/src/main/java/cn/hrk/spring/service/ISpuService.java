@@ -1,6 +1,7 @@
 package cn.hrk.spring.service;
 
 import cn.hrk.common.domain.PageResult;
+import cn.hrk.spring.goods.domain.Goods;
 import cn.hrk.spring.goods.domain.Spec;
 import cn.hrk.spring.goods.domain.Spu;
 
@@ -16,4 +17,5 @@ public interface ISpuService {
     public void add ( Spu spu) ;
     public void update(Spu spu);
     public void delete(Integer id);
+    public void saveGoods(Goods goods);
 }
