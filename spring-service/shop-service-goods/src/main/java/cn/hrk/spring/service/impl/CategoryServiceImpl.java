@@ -1,82 +1,109 @@
 package cn.hrk.spring.service.impl;
 
 import cn.hrk.common.domain.PageResult;
-import cn.hrk.spring.goods.domain.Brand;
 import cn.hrk.spring.goods.domain.Category;
-import cn.hrk.spring.mapper.BrandMapper;
+import cn.hrk.spring.goods.domain.Category;
 import cn.hrk.spring.mapper.CategoryMapper;
-import cn.hrk.spring.service.ICategoryService;
+import cn.hrk.spring.goods.service.ICategoryService;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 import java.util.Map;
 
-@Service
+@RestController
+@RequestMapping("/category")
 public class CategoryServiceImpl implements ICategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
 
-    @Override
+    @GetMapping("/findAll")
     public List<Category> findAll() {
         return categoryMapper.selectAll();
     }
-
-    @Override
-    public PageResult<Category> findPage(int page, int size) {
-
+    /**
+     * 分⻚查询
+     * @param page ⻚码
+     * @param size 每⻚记录数
+     * @return 分⻚结果
+     */
+    @GetMapping("/findPage")
+    public PageResult<Category> findPage(@RequestParam("page") int page,
+                                      @RequestParam("size") int size) {
         PageHelper.startPage(page,size);
-        List<Category> categories=categoryMapper.selectAll();
-        PageInfo<Category> pageInfo=new PageInfo<>(categories);
-        return new PageResult<Category>(pageInfo.getTotal(),categories);
+        Page<Category> Categorys = (Page<Category>) categoryMapper.selectAll();
+        return new PageResult<Category>
+                (Categorys.getTotal(),Categorys.getResult());
     }
-
-    @Override
+    /**
+     * 条件查询
+     * @param searchMap 查询条件
+     * @return
+     */
+    @PostMapping("/findList")
     public List<Category> findList(Map<String, Object> searchMap) {
-
-        Example example = createExample(searchMap) ;
-        return categoryMapper.selectByExample( example) ;
+        Example example = createExample(searchMap);
+        return categoryMapper.selectByExample(example);
     }
-
-    @Override
-    public PageResult<Category> findPage(Map<String, Object> searchMap, int page, int size) {
-        Example example = createExample(searchMap) ;
-        PageHelper.startPage(page,size);
-        List<Category> categories=categoryMapper.selectByExample(example);
-        PageInfo<Category> pageInfo=new PageInfo<>(categories);
-        return new PageResult<Category>(pageInfo.getTotal(),categories);
-    }
-
-    @Override
-    public Category findById(Integer id) {
+    /**
+     * 分⻚+条件查询
+     * @param searchMap
+     * @param page
+     * @param size
+     * @return
+     */
+    @PostMapping("/findPage")
+    public PageResult<Category> findPage(Map<String, Object> searchMap, @RequestParam("page") int page, @RequestParam("size") int size)
+    { PageHelper.startPage(page,size);
+        Example example = createExample(searchMap);
+        Page<Category> categories = (Page<Category>)
+                categoryMapper.selectByExample(example);
+        return new PageResult<Category>
+                (categories.getTotal(),categories.getResult()); }
+    /**
+     * 根据Id查询
+     * @param id
+     * @return
+     */
+    @GetMapping("/findById/{id}")
+    public Category findById(@PathVariable("id") Integer id) {
         return categoryMapper.selectByPrimaryKey(id);
     }
 
-    @Override
-    public void add(Category category) {
-        categoryMapper.insertUseGeneratedKeys(category);
+
+
+
+    /**
+     * 新增
+     * @param category
+     */
+    @PostMapping("/add")
+    public void add(@RequestBody Category category) {
+        categoryMapper.insert(category);
     }
 
-    @Override
-    public void update(Category category) {
+    /**
+     * 修改
+     * @param category
+     */
+    @PostMapping("/update")
+    public void update(@RequestBody Category category) {
         categoryMapper.updateByPrimaryKeySelective(category);
     }
 
-    @Override
-    public int delete(Integer id) {
-        Example example=new Example(Category.class);
-        Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("parentId", id);
-        List<Category> categories= categoryMapper.selectByExample( example) ;
-        if (categories.size()>0){
-            return 0;
-        }
-       return categoryMapper.deleteByPrimaryKey(id);
+    /**
+     * 删除
+     * @param id
+     */
+    @GetMapping("/delete/{id}")
+    public int delete(@PathVariable("id") Integer id)  {
+      return   categoryMapper.deleteByPrimaryKey(id);
     }
-
 
     /*
      *构建查询条件

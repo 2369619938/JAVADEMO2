@@ -14,6 +14,7 @@
         <module name="spring-commons-redis" />
         <module name="spring-eureka" />
         <module name="spring-gateway" />
+        <module name="spring-manager" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -26,6 +27,7 @@
       <module name="spring-commons-redis" target="1.8" />
       <module name="spring-eureka" target="1.8" />
       <module name="spring-gateway" target="1.8" />
+      <module name="spring-manager" target="1.8" />
       <module name="spring-parent" target="1.8" />
       <module name="spring-service" target="1.8" />
     </bytecodeTargetLevel>
@@ -39,6 +41,7 @@
       <module name="spring-commons-redis" options="-parameters" />
       <module name="spring-eureka" options="-parameters" />
       <module name="spring-gateway" options="-parameters" />
+      <module name="spring-manager" options="-parameters" />
     </option>
   </component>
 </project>

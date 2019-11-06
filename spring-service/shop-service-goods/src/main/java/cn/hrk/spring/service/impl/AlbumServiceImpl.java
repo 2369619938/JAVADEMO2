@@ -2,69 +2,106 @@ package cn.hrk.spring.service.impl;
 
 import cn.hrk.common.domain.PageResult;
 import cn.hrk.spring.goods.domain.Album;
-import cn.hrk.spring.goods.domain.Brand;
+import cn.hrk.spring.goods.domain.Album;
 import cn.hrk.spring.mapper.AlbumMapper;
-import cn.hrk.spring.mapper.BrandMapper;
-import cn.hrk.spring.service.IAlbumService;
+import cn.hrk.spring.goods.service.IAlbumService;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 import java.util.Map;
 
-@Service
+@RestController
+@RequestMapping("/album")
 public class AlbumServiceImpl implements IAlbumService {
     @Autowired
     private AlbumMapper albumMapper;
 
-    @Override
+    @GetMapping("/findAll")
     public List<Album> findAll() {
         return albumMapper.selectAll();
     }
-
-    @Override
-    public PageResult<Album> findPage(int page, int size) {
+    /**
+     * 分⻚查询
+     * @param page ⻚码
+     * @param size 每⻚记录数
+     * @return 分⻚结果
+     */
+    @GetMapping("/findPage")
+    public PageResult<Album> findPage(@RequestParam("page") int page,
+                                      @RequestParam("size") int size) {
         PageHelper.startPage(page,size);
-        List<Album> albums=albumMapper.selectAll();
-        PageInfo<Album> pageInfo=new PageInfo<>(albums);
-        return new PageResult<Album>(pageInfo.getTotal(),albums);
+        Page<Album> Albums = (Page<Album>) albumMapper.selectAll();
+        return new PageResult<Album>
+                (Albums.getTotal(),Albums.getResult());
     }
-
-    @Override
+    /**
+     * 条件查询
+     * @param searchMap 查询条件
+     * @return
+     */
+    @PostMapping("/findList")
     public List<Album> findList(Map<String, Object> searchMap) {
-        Example example = createExample(searchMap) ;
-        return albumMapper.selectByExample( example) ;
+        Example example = createExample(searchMap);
+        return albumMapper.selectByExample(example);
+    }
+    /**
+     * 分⻚+条件查询
+     * @param searchMap
+     * @param page
+     * @param size
+     * @return
+     */
+    @PostMapping("/findPage")
+    public PageResult<Album> findPage(Map<String, Object> searchMap, @RequestParam("page") int page, @RequestParam("size") int size)
+    { PageHelper.startPage(page,size);
+        Example example = createExample(searchMap);
+        Page<Album> Albums = (Page<Album>)
+                albumMapper.selectByExample(example);
+        return new PageResult<Album>
+                (Albums.getTotal(),Albums.getResult()); }
+    /**
+     * 根据Id查询
+     * @param id
+     * @return
+     */
+    @GetMapping("/findById/{id}")
+    public Album findById(@PathVariable("id") Integer id) {
+        return albumMapper.selectByPrimaryKey(id);
     }
 
-    @Override
-    public PageResult<Album> findPage(Map<String, Object> searchMap, int page, int size) {
-        Example example = createExample(searchMap) ;
-        PageHelper.startPage(page,size);
-        List<Album> albums=albumMapper.selectByExample(example);
-        PageInfo<Album> pageInfo=new PageInfo<>(albums);
-        return new PageResult<Album>(pageInfo.getTotal(),albums);
-    }
 
-    @Override
-    public Album findById(Integer id) {
-            return albumMapper.selectByPrimaryKey(id);
-    }
 
-    @Override
-    public void add(Album album) {
+
+    /**
+     * 新增
+     * @param album
+     */
+    @PostMapping("/add")
+    public void add(@RequestBody Album album) {
         albumMapper.insert(album);
     }
 
-    @Override
-    public void update(Album album) {
+    /**
+     * 修改
+     * @param album
+     */
+    @PostMapping("/update")
+    public void update(@RequestBody Album album) {
         albumMapper.updateByPrimaryKeySelective(album);
     }
 
-    @Override
-    public void delete(Integer id)  {
+    /**
+     * 删除
+     * @param id
+     */
+    @GetMapping("/delete/{id}")
+    public void delete(@PathVariable("id") Integer id)  {
         albumMapper.deleteByPrimaryKey(id);
     }
     /*

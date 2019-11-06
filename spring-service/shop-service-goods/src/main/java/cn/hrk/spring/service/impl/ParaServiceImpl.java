@@ -2,76 +2,107 @@ package cn.hrk.spring.service.impl;
 
 import cn.hrk.common.domain.PageResult;
 import cn.hrk.spring.goods.domain.*;
-import cn.hrk.spring.mapper.BrandMapper;
 import cn.hrk.spring.mapper.ParaMapper;
 import cn.hrk.spring.mapper.TemplateMapper;
-import cn.hrk.spring.service.IParaService;
+import cn.hrk.spring.goods.service.IParaService;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 import java.util.Map;
 
-@Service
+@RestController
+@RequestMapping("/para")
 public class ParaServiceImpl implements IParaService {
     @Autowired
     private ParaMapper paraMapper;
     @Autowired
     private TemplateMapper templateMapper;
-    @Override
+    @GetMapping("/findAll")
     public List<Para> findAll() {
         return paraMapper.selectAll();
     }
-
-    @Override
-    public PageResult<Para> findPage(int page, int size) {
+    /**
+     * 分⻚查询
+     * @param page ⻚码
+     * @param size 每⻚记录数
+     * @return 分⻚结果
+     */
+    @GetMapping("/findPage")
+    public PageResult<Para> findPage(@RequestParam("page") int page,
+                                         @RequestParam("size") int size) {
         PageHelper.startPage(page,size);
-        List<Para> paras=paraMapper.selectAll();
-        PageInfo<Para> pageInfo=new PageInfo<>(paras);
-        return new PageResult<Para>(pageInfo.getTotal(),paras);
+        Page<Para> paras = (Page<Para>) paraMapper.selectAll();
+        return new PageResult<Para>
+                (paras.getTotal(),paras.getResult());
     }
-
-    @Override
+    /**
+     * 条件查询
+     * @param searchMap 查询条件
+     * @return
+     */
+    @PostMapping("/findList")
     public List<Para> findList(Map<String, Object> searchMap) {
-        Example example = createExample(searchMap) ;
-        return paraMapper.selectByExample( example) ;
-
+        Example example = createExample(searchMap);
+        return paraMapper.selectByExample(example);
     }
-
-    @Override
-    public PageResult<Para> findPage(Map<String, Object> searchMap, int page, int size) {
-        Example example = createExample(searchMap) ;
-        PageHelper.startPage(page,size);
-        List<Para> paras=paraMapper.selectByExample(example);
-        PageInfo<Para> pageInfo=new PageInfo<>(paras);
-        return new PageResult<Para>(pageInfo.getTotal(),paras);
-
-    }
-
-    @Override
-    public Para findById(Integer id) {
+    /**
+     * 分⻚+条件查询
+     * @param searchMap
+     * @param page
+     * @param size
+     * @return
+     */
+    @PostMapping("/findPage")
+    public PageResult<Para> findPage(Map<String, Object> searchMap, @RequestParam("page") int page, @RequestParam("size") int size)
+    { PageHelper.startPage(page,size);
+        Example example = createExample(searchMap);
+        Page<Para> paras = (Page<Para>)
+                paraMapper.selectByExample(example);
+        return new PageResult<Para>
+                (paras.getTotal(),paras.getResult()); }
+    /**
+     * 根据Id查询
+     * @param id
+     * @return
+     */
+    @GetMapping("/findById/{id}")
+    public Para findById(@PathVariable("id") Integer id) {
         return paraMapper.selectByPrimaryKey(id);
     }
 
-    @Override
-    public void add(Para para) {
+    /**
+     * 新增
+     * @param para
+     */
+    @PostMapping("/add")
+    public void add(@RequestBody Para para) {
         paraMapper.insertUseGeneratedKeys(para);
         Template template=templateMapper.selectByPrimaryKey(para.getTemplateId());
         template.setSpecNum(template.getSpecNum()+1);
         templateMapper.updateByPrimaryKey(template);
     }
 
-    @Override
-    public void update(Para para) {
+    /**
+     * 修改
+     * @param para
+     */
+    @PostMapping("/update")
+    public void update(@RequestBody Para para) {
         paraMapper.updateByPrimaryKeySelective(para);
     }
 
-    @Override
-    public void delete(Integer id) {
-
+    /**
+     * 删除
+     * @param id
+     */
+    @GetMapping("/delete/{id}")
+    public void delete(@PathVariable("id") Integer id) {
         Para para=paraMapper.selectByPrimaryKey(id);
         paraMapper.deleteByPrimaryKey(id);
         Template template=templateMapper.selectByPrimaryKey(para.getTemplateId());

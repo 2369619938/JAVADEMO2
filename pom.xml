@@ -8,6 +8,7 @@
         <module>spring-gateway</module>
         <module>spring-api</module>
         <module>spring-service</module>
+        <module>spring-manager</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

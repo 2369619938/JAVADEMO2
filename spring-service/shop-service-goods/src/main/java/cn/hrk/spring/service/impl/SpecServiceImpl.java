@@ -1,79 +1,110 @@
 package cn.hrk.spring.service.impl;
 
 import cn.hrk.common.domain.PageResult;
-import cn.hrk.spring.goods.domain.Spec;
-import cn.hrk.spring.goods.domain.Category;
+import cn.hrk.spring.goods.domain.Para;
 import cn.hrk.spring.goods.domain.Spec;
 import cn.hrk.spring.goods.domain.Template;
 import cn.hrk.spring.mapper.SpecMapper;
-import cn.hrk.spring.mapper.SpecMapper;
 import cn.hrk.spring.mapper.TemplateMapper;
-import cn.hrk.spring.service.ISpecService;
+import cn.hrk.spring.goods.service.ISpecService;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 import java.util.Map;
 
-@Service
+@RestController
+@RequestMapping("/spec")
 public class SpecServiceImpl implements ISpecService {
     @Autowired
     private SpecMapper specMapper;
     @Autowired
     private TemplateMapper templateMapper;
-    @Override
+    @GetMapping("/findAll")
     public List<Spec> findAll() {
         return specMapper.selectAll();
     }
-
-    @Override
-    public PageResult<Spec> findPage(int page, int size) {
+    /**
+     * 分⻚查询
+     * @param page ⻚码
+     * @param size 每⻚记录数
+     * @return 分⻚结果
+     */
+    @GetMapping("/findPage")
+    public PageResult<Spec> findPage(@RequestParam("page") int page,
+                                     @RequestParam("size") int size) {
         PageHelper.startPage(page,size);
-        List<Spec> Specpage=specMapper.selectAll();
-        PageInfo<Spec> pageInfo=new PageInfo<>(Specpage);
-        return new PageResult<Spec>(pageInfo.getTotal(),Specpage);
+        Page<Spec> specs = (Page<Spec>) specMapper.selectAll();
+        return new PageResult<Spec>
+                (specs.getTotal(),specs.getResult());
     }
-
-    @Override
+    /**
+     * 条件查询
+     * @param searchMap 查询条件
+     * @return
+     */
+    @PostMapping("/findList")
     public List<Spec> findList(Map<String, Object> searchMap) {
-        Example example = createExample(searchMap) ;
-        return specMapper.selectByExample( example) ;
-
+        Example example = createExample(searchMap);
+        return specMapper.selectByExample(example);
     }
-
-    @Override
-    public PageResult<Spec> findPage(Map<String, Object> searchMap, int page, int size) {
-        Example example = createExample(searchMap) ;
-        PageHelper.startPage(page,size);
-        List<Spec> Specpage=specMapper.selectByExample(example);
-        PageInfo<Spec> pageInfo=new PageInfo<>(Specpage);
-        return new PageResult<Spec>(pageInfo.getTotal(),Specpage);
-
-    }
-
-    @Override
-    public Spec findById(Integer id) {
+    /**
+     * 分⻚+条件查询
+     * @param searchMap
+     * @param page
+     * @param size
+     * @return
+     */
+    @PostMapping("/findPage")
+    public PageResult<Spec> findPage(Map<String, Object> searchMap, @RequestParam("page") int page, @RequestParam("size") int size)
+    { PageHelper.startPage(page,size);
+        Example example = createExample(searchMap);
+        Page<Spec> specs = (Page<Spec>)
+                specMapper.selectByExample(example);
+        return new PageResult<Spec>
+                (specs.getTotal(),specs.getResult()); }
+    /**
+     * 根据Id查询
+     * @param id
+     * @return
+     */
+    @GetMapping("/findById/{id}")
+    public Spec findById(@PathVariable("id") Integer id) {
         return specMapper.selectByPrimaryKey(id);
     }
 
-    @Override
-    public void add(Spec spec) {
+    /**
+     * 新增
+     * @param spec
+     */
+    @PostMapping("/add")
+    public void add(@RequestBody Spec spec) {
         specMapper.insertUseGeneratedKeys(spec);
         Template template=templateMapper.selectByPrimaryKey(spec.getTemplateId());
         template.setSpecNum(template.getSpecNum()+1);
         templateMapper.updateByPrimaryKey(template);
     }
 
-    @Override
-    public void update(Spec spec) {
+    /**
+     * 修改
+     * @param spec
+     */
+    @PostMapping("/update")
+    public void update(@RequestBody Spec spec) {
         specMapper.updateByPrimaryKeySelective(spec);
     }
 
-    @Override
-    public void delete(Integer id) {
+    /**
+     * 删除
+     * @param id
+     */
+    @GetMapping("/delete/{id}")
+    public void delete(@PathVariable("id") Integer id) {
         Spec spec=specMapper.selectByPrimaryKey(id);
         specMapper.deleteByPrimaryKey(id);
         Template template=templateMapper.selectByPrimaryKey(spec.getTemplateId());

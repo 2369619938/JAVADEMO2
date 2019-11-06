@@ -7,20 +7,23 @@ import cn.hrk.spring.mapper.CategoryBrandMapper;
 import cn.hrk.spring.mapper.CategoryMapper;
 import cn.hrk.spring.mapper.SkuMapper;
 import cn.hrk.spring.mapper.SpuMapper;
-import cn.hrk.spring.service.ISpuService;
+import cn.hrk.spring.goods.service.ISpuService;
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-@Service
+@RestController
+@RequestMapping("/spu")
 public class SpuServiceImpl implements ISpuService {
 
     @Autowired
@@ -32,60 +35,92 @@ public class SpuServiceImpl implements ISpuService {
     @Autowired
     private CategoryBrandMapper categoryBrandMapper;
     IdWorker idWorker=new IdWorker();
-    @Override
+    @GetMapping("/findAll")
     public List<Spu> findAll() {
         return spuMapper.selectAll();
     }
 
-    @Override
-    public PageResult<Spu> findPage(int page, int size) {
+    /**
+     * 分⻚查询
+     * @param page ⻚码
+     * @param size 每⻚记录数
+     * @return 分⻚结果
+     */
+    @GetMapping("/findPage")
+    public PageResult<Spu> findPage(@RequestParam("page") int page,
+                                      @RequestParam("size") int size) {
         PageHelper.startPage(page,size);
-        List<Spu> Spupage=spuMapper.selectAll();
-        PageInfo<Spu> pageInfo=new PageInfo<>(Spupage);
-        return new PageResult<Spu>(pageInfo.getTotal(),Spupage);
+        Page<Spu> Albums = (Page<Spu>) spuMapper.selectAll();
+        return new PageResult<Spu>
+                (Albums.getTotal(),Albums.getResult());
     }
-
-    @Override
+    /**
+     * 条件查询
+     * @param searchMap 查询条件
+     * @return
+     */
+    @PostMapping("/findList")
     public List<Spu> findList(Map<String, Object> searchMap) {
-        Example example = createExample(searchMap) ;
-        return spuMapper.selectByExample( example) ;
-
+        Example example = createExample(searchMap);
+        return spuMapper.selectByExample(example);
     }
-
-    @Override
-    public PageResult<Spu> findPage(Map<String, Object> searchMap, int page, int size) {
-        Example example = createExample(searchMap) ;
-        PageHelper.startPage(page,size);
-        List<Spu> Spupage=spuMapper.selectByExample(example);
-        PageInfo<Spu> pageInfo=new PageInfo<>(Spupage);
-        return new PageResult<Spu>(pageInfo.getTotal(),Spupage);
-
-    }
-
-    @Override
-    public Spu findById(Integer id) {
+    /**
+     * 分⻚+条件查询
+     * @param searchMap
+     * @param page
+     * @param size
+     * @return
+     */
+    @PostMapping("/findPage")
+    public PageResult<Spu> findPage(Map<String, Object> searchMap, @RequestParam("page") int page, @RequestParam("size") int size)
+    { PageHelper.startPage(page,size);
+        Example example = createExample(searchMap);
+        Page<Spu> Albums = (Page<Spu>)
+                spuMapper.selectByExample(example);
+        return new PageResult<Spu>
+                (Albums.getTotal(),Albums.getResult()); }
+    /**
+     * 根据Id查询
+     * @param id
+     * @return
+     */
+    @GetMapping("/findById/{id}")
+    public Spu findById(@PathVariable("id") Integer id) {
         return spuMapper.selectByPrimaryKey(id);
     }
 
-    @Override
-    public void add(Spu spu) {
-        spuMapper.insertUseGeneratedKeys(spu);
-    }
-
-    @Override
-    public void update(Spu spu) {
-        spuMapper.updateByPrimaryKeySelective(spu);
-    }
-
-    @Override
-    public void delete(Integer id) {
+    /**
+     * 删除
+     * @param id
+     */
+    @GetMapping("/delete/{id}")
+    public void delete(@PathVariable("id") Integer id)  {
         spuMapper.deleteByPrimaryKey(id);
     }
 
 
+    /**
+     * 新增
+     * @param spu
+     */
+    @PostMapping("/add")
+    public void add(@RequestBody Spu spu) {
+        spuMapper.insert(spu);
+    }
 
+    /**
+     * 修改
+     * @param spu
+     */
+    @PostMapping("/update")
+    public void update(@RequestBody Spu spu) {
+        spuMapper.updateByPrimaryKeySelective(spu);
+    }
+
+
+    @PostMapping("/saveGoods")
     @Transactional
-    public void saveGoods(Goods goods) {
+    public void saveGoods(@RequestBody Goods goods) {
         //保存⼀个spu的信息
         Spu spu=goods.getSpu();
         if (spu.getId()==null){

@@ -11,6 +11,7 @@
       <module fileurl="file://$PROJECT_DIR$/spring-commons/spring-commons-redis/spring-commons-redis.iml" filepath="$PROJECT_DIR$/spring-commons/spring-commons-redis/spring-commons-redis.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-eureka/spring-eureka.iml" filepath="$PROJECT_DIR$/spring-eureka/spring-eureka.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-gateway/spring-gateway.iml" filepath="$PROJECT_DIR$/spring-gateway/spring-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-manager/spring-manager.iml" filepath="$PROJECT_DIR$/spring-manager/spring-manager.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-parent.iml" filepath="$PROJECT_DIR$/spring-parent.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-service/spring-service.iml" filepath="$PROJECT_DIR$/spring-service/spring-service.iml" />
     </modules>

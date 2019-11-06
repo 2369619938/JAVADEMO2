@@ -1,0 +1,46 @@
+server:
+  port: 8100
+spring:
+  application:
+    name: service-manager
+  servlet:
+    multipart:
+      max-file-size: 3MB
+      max-request-size: 3MB
+  main:
+    allow-bean-definition-overriding: true
+# 注册中⼼配置
+eureka:
+  client: #客户端注册进eureka服务列表内
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka
+  #defaultZone:http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+  instance:
+    instance-id: ${spring.application.name}:${server.port}
+    prefer-ip-address: true #访问路径可以显示IP地址
+feign:
+  hystrix:
+    enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: 10000
+        readTimeout: 10000
+#hystrix的超时时间
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 9000
+aliyun:
+  file:
+    endpoint: http://oss-cn-hangzhou.aliyuncs.com
+    accessKeyId: LTAI4Fovzyr2Bqu9MptWJzTK
+    accessKeySecret: g5DucWzop3NYzpKJ3XhGlJSpk7h9lD
+    bucketName: springshop
+    folder: upload
+    webUrl: https://springshop.oss-cn-hangzhou.aliyuncs.com
