@@ -2,14 +2,11 @@ package cn.hrk.spring.service.impl;
 
 import cn.hrk.common.domain.PageResult;
 import cn.hrk.spring.goods.domain.Album;
-import cn.hrk.spring.goods.domain.Album;
 import cn.hrk.spring.mapper.AlbumMapper;
 import cn.hrk.spring.goods.service.IAlbumService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Example;
 
@@ -46,7 +43,7 @@ public class AlbumServiceImpl implements IAlbumService {
      * @return
      */
     @PostMapping("/findList")
-    public List<Album> findList(Map<String, Object> searchMap) {
+    public List<Album> findList(@RequestBody Map<String, Object> searchMap) {
         Example example = createExample(searchMap);
         return albumMapper.selectByExample(example);
     }
@@ -58,7 +55,7 @@ public class AlbumServiceImpl implements IAlbumService {
      * @return
      */
     @PostMapping("/findPage")
-    public PageResult<Album> findPage(Map<String, Object> searchMap, @RequestParam("page") int page, @RequestParam("size") int size)
+    public PageResult<Album> findPage(@RequestBody Map<String, Object> searchMap, @RequestParam("page") int page, @RequestParam("size") int size)
     { PageHelper.startPage(page,size);
         Example example = createExample(searchMap);
         Page<Album> Albums = (Page<Album>)

@@ -3,14 +3,11 @@ package cn.hrk.spring.service.impl;
 import cn.hrk.common.domain.PageResult;
 import cn.hrk.spring.goods.domain.Sku;
 import cn.hrk.spring.goods.domain.Brand;
-import cn.hrk.spring.goods.domain.Sku;
 import cn.hrk.spring.mapper.SkuMapper;
 import cn.hrk.spring.goods.service.ISkuService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Example;
 
@@ -47,7 +44,7 @@ public class SkuServiceImpl implements ISkuService {
      * @return
      */
     @PostMapping("/findList")
-    public List<Sku> findList(Map<String, Object> searchMap) {
+    public List<Sku> findList(@RequestBody Map<String, Object> searchMap) {
         Example example = createExample(searchMap);
         return skuMapper.selectByExample(example);
     }
@@ -59,7 +56,7 @@ public class SkuServiceImpl implements ISkuService {
      * @return
      */
     @PostMapping("/findPage")
-    public PageResult<Sku> findPage(Map<String, Object> searchMap, @RequestParam("page") int page, @RequestParam("size") int size)
+    public PageResult<Sku> findPage(@RequestBody Map<String, Object> searchMap, @RequestParam("page") int page, @RequestParam("size") int size)
     { PageHelper.startPage(page,size);
         Example example = createExample(searchMap);
         Page<Sku> Skus = (Page<Sku>)

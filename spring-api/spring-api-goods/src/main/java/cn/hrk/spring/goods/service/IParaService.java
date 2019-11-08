@@ -1,9 +1,6 @@
 package cn.hrk.spring.goods.service;
 
 import cn.hrk.common.domain.PageResult;
-import cn.hrk.common.domain.R;
-import cn.hrk.spring.goods.domain.Para;
-import cn.hrk.spring.goods.domain.Category;
 import cn.hrk.spring.goods.domain.Para;
 import org.springframework.web.bind.annotation.*;
 

@@ -3,8 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/spring-service/shop-service-goods/shop-service-goods.iml" filepath="$PROJECT_DIR$/spring-service/shop-service-goods/shop-service-goods.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-service/shop-service-orders/shop-service-orders.iml" filepath="$PROJECT_DIR$/spring-service/shop-service-orders/shop-service-orders.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-api/spring-api.iml" filepath="$PROJECT_DIR$/spring-api/spring-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-api/spring-api-goods/spring-api-goods.iml" filepath="$PROJECT_DIR$/spring-api/spring-api-goods/spring-api-goods.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-api/spring-api-orders/spring-api-orders.iml" filepath="$PROJECT_DIR$/spring-api/spring-api-orders/spring-api-orders.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-commons/spring-commons.iml" filepath="$PROJECT_DIR$/spring-commons/spring-commons.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-commons/spring-commons-core/spring-commons-core.iml" filepath="$PROJECT_DIR$/spring-commons/spring-commons-core/spring-commons-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-commons/spring-commons-oss/spring-commons-oss.iml" filepath="$PROJECT_DIR$/spring-commons/spring-commons-oss/spring-commons-oss.iml" />

@@ -2,9 +2,8 @@ package cn.hrk.spring.web.controller.goods;
 
 import cn.hrk.common.domain.PageResult;
 import cn.hrk.common.domain.R;
-import cn.hrk.spring.feign.CategoryFeign;
+import cn.hrk.spring.goods.feign.CategoryFeign;
 import cn.hrk.spring.goods.domain.Category;
-import cn.hrk.spring.goods.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

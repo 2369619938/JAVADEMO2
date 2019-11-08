@@ -5,14 +5,11 @@ import cn.hrk.common.domain.R;
 import cn.hrk.spring.goods.domain.Brand;
 import cn.hrk.spring.goods.service.IBrandService;
 import cn.hrk.spring.mapper.BrandMapper;
-import cn.hrk.spring.oss.OssUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Example;
 
@@ -51,7 +48,7 @@ public class BrandServiceImpl implements IBrandService {
      * @return
      */
     @PostMapping("/findList")
-    public List<Brand> findList(Map<String, Object> searchMap) {
+    public List<Brand> findList(@RequestBody Map<String, Object> searchMap) {
         Example example = createExample(searchMap);
         return brandMapper.selectByExample(example);
     }
@@ -63,7 +60,7 @@ public class BrandServiceImpl implements IBrandService {
      * @return
      */
     @PostMapping("/findPage")
-    public PageResult<Brand> findPage(Map<String, Object> searchMap,@RequestParam("page") int page,@RequestParam("size") int size)
+    public PageResult<Brand> findPage(@RequestBody Map<String, Object> searchMap,@RequestParam("page") int page,@RequestParam("size") int size)
     { PageHelper.startPage(page,size);
         Example example = createExample(searchMap);
         Page<Brand> brands = (Page<Brand>)

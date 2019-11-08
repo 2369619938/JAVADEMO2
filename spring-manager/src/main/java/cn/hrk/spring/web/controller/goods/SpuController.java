@@ -2,7 +2,7 @@ package cn.hrk.spring.web.controller.goods;
 
 import cn.hrk.common.domain.PageResult;
 import cn.hrk.common.domain.R;
-import cn.hrk.spring.feign.SpuFeign;
+import cn.hrk.spring.goods.feign.SpuFeign;
 import cn.hrk.spring.goods.domain.Goods;
 import cn.hrk.spring.goods.domain.Spu;
 import cn.hrk.spring.oss.FileR;

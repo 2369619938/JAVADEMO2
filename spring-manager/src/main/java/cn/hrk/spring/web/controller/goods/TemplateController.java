@@ -1,10 +1,11 @@
 package cn.hrk.spring.web.controller.goods;
 
+
+
 import cn.hrk.common.domain.PageResult;
 import cn.hrk.common.domain.R;
-import cn.hrk.spring.feign.TemplateFeign;
 import cn.hrk.spring.goods.domain.Template;
-import cn.hrk.spring.goods.service.ITemplateService;
+import cn.hrk.spring.goods.feign.TemplateFeign;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

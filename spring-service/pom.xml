@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>shop-service-goods</module>
+        <module>shop-service-orders</module>
     </modules>
     <dependencies>
         <dependency>

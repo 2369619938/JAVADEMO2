@@ -2,10 +2,8 @@ package cn.hrk.spring.web.controller.goods;
 
 import cn.hrk.common.domain.PageResult;
 import cn.hrk.common.domain.R;
-import cn.hrk.spring.feign.PrefFeign;
-import cn.hrk.spring.feign.SkuFeign;
+import cn.hrk.spring.goods.feign.SkuFeign;
 import cn.hrk.spring.goods.domain.Sku;
-import cn.hrk.spring.goods.service.ISkuService;
 import cn.hrk.spring.oss.FileR;
 import cn.hrk.spring.oss.OssUtils;
 import org.springframework.beans.factory.annotation.Autowired;

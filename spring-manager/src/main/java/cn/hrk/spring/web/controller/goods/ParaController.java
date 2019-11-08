@@ -2,9 +2,8 @@ package cn.hrk.spring.web.controller.goods;
 
 import cn.hrk.common.domain.PageResult;
 import cn.hrk.common.domain.R;
-import cn.hrk.spring.feign.ParaFeign;
+import cn.hrk.spring.goods.feign.ParaFeign;
 import cn.hrk.spring.goods.domain.Para;
-import cn.hrk.spring.goods.service.IParaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

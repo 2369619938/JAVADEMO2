@@ -2,14 +2,11 @@ package cn.hrk.spring.service.impl;
 
 import cn.hrk.common.domain.PageResult;
 import cn.hrk.spring.goods.domain.Category;
-import cn.hrk.spring.goods.domain.Category;
 import cn.hrk.spring.mapper.CategoryMapper;
 import cn.hrk.spring.goods.service.ICategoryService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Example;
 
@@ -46,7 +43,7 @@ public class CategoryServiceImpl implements ICategoryService {
      * @return
      */
     @PostMapping("/findList")
-    public List<Category> findList(Map<String, Object> searchMap) {
+    public List<Category> findList(@RequestBody Map<String, Object> searchMap) {
         Example example = createExample(searchMap);
         return categoryMapper.selectByExample(example);
     }
@@ -58,7 +55,7 @@ public class CategoryServiceImpl implements ICategoryService {
      * @return
      */
     @PostMapping("/findPage")
-    public PageResult<Category> findPage(Map<String, Object> searchMap, @RequestParam("page") int page, @RequestParam("size") int size)
+    public PageResult<Category> findPage(@RequestBody Map<String, Object> searchMap, @RequestParam("page") int page, @RequestParam("size") int size)
     { PageHelper.startPage(page,size);
         Example example = createExample(searchMap);
         Page<Category> categories = (Page<Category>)

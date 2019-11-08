@@ -11,9 +11,7 @@ import cn.hrk.spring.goods.service.ISpuService;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Example;
@@ -60,7 +58,7 @@ public class SpuServiceImpl implements ISpuService {
      * @return
      */
     @PostMapping("/findList")
-    public List<Spu> findList(Map<String, Object> searchMap) {
+    public List<Spu> findList(@RequestBody Map<String, Object> searchMap) {
         Example example = createExample(searchMap);
         return spuMapper.selectByExample(example);
     }
@@ -72,7 +70,7 @@ public class SpuServiceImpl implements ISpuService {
      * @return
      */
     @PostMapping("/findPage")
-    public PageResult<Spu> findPage(Map<String, Object> searchMap, @RequestParam("page") int page, @RequestParam("size") int size)
+    public PageResult<Spu> findPage(@RequestBody Map<String, Object> searchMap, @RequestParam("page") int page, @RequestParam("size") int size)
     { PageHelper.startPage(page,size);
         Example example = createExample(searchMap);
         Page<Spu> Albums = (Page<Spu>)

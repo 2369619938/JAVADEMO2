@@ -2,9 +2,8 @@ package cn.hrk.spring.web.controller.goods;
 
 import cn.hrk.common.domain.PageResult;
 import cn.hrk.common.domain.R;
-import cn.hrk.spring.feign.AlbumFeign;
+import cn.hrk.spring.goods.feign.AlbumFeign;
 import cn.hrk.spring.goods.domain.Album;
-import cn.hrk.spring.goods.service.IAlbumService;
 import cn.hrk.spring.oss.FileR;
 import cn.hrk.spring.oss.OssUtils;
 import org.springframework.beans.factory.annotation.Autowired;

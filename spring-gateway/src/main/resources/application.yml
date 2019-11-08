@@ -3,10 +3,13 @@ server:
 spring:
   application:
     name: shop-gateway
+
 zuul:
   prefix: /api #路由前缀
   routes:
     service-goods : /goods/**
+    service-orders : /orders/**
+    service-manager : /manager/**
 # 注册中⼼配置
 eureka:
   client: #客户端注册进eureka服务列表内
@@ -23,8 +26,10 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 5000 #熔断超时时⻓# 暴露监控端点
+
 management:
   endpoints:
     web:
       exposure:
         include: '*'
+

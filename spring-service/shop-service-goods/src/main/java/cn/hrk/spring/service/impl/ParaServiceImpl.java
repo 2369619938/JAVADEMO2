@@ -1,15 +1,14 @@
 package cn.hrk.spring.service.impl;
 
 import cn.hrk.common.domain.PageResult;
-import cn.hrk.spring.goods.domain.*;
+import cn.hrk.spring.goods.domain.Para;
+import cn.hrk.spring.goods.domain.Template;
 import cn.hrk.spring.mapper.ParaMapper;
 import cn.hrk.spring.mapper.TemplateMapper;
 import cn.hrk.spring.goods.service.IParaService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Example;
 
@@ -47,7 +46,7 @@ public class ParaServiceImpl implements IParaService {
      * @return
      */
     @PostMapping("/findList")
-    public List<Para> findList(Map<String, Object> searchMap) {
+    public List<Para> findList(@RequestBody Map<String, Object> searchMap) {
         Example example = createExample(searchMap);
         return paraMapper.selectByExample(example);
     }
@@ -59,7 +58,7 @@ public class ParaServiceImpl implements IParaService {
      * @return
      */
     @PostMapping("/findPage")
-    public PageResult<Para> findPage(Map<String, Object> searchMap, @RequestParam("page") int page, @RequestParam("size") int size)
+    public PageResult<Para> findPage(@RequestBody Map<String, Object> searchMap, @RequestParam("page") int page, @RequestParam("size") int size)
     { PageHelper.startPage(page,size);
         Example example = createExample(searchMap);
         Page<Para> paras = (Page<Para>)

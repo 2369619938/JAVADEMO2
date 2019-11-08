@@ -1,11 +1,8 @@
 package cn.hrk.spring.goods.service;
 
 import cn.hrk.common.domain.PageResult;
-import cn.hrk.common.domain.R;
 import cn.hrk.spring.goods.domain.Spu;
 import cn.hrk.spring.goods.domain.Goods;
-import cn.hrk.spring.goods.domain.Spec;
-import cn.hrk.spring.goods.domain.Spu;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>spring-api-goods</module>
+        <module>spring-api-orders</module>
     </modules>
 
     <dependencies>

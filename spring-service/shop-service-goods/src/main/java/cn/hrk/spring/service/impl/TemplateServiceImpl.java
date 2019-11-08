@@ -2,18 +2,14 @@ package cn.hrk.spring.service.impl;
 
 import cn.hrk.common.domain.PageResult;
 import cn.hrk.spring.goods.domain.Template;
-import cn.hrk.spring.goods.domain.Template;
 import cn.hrk.spring.mapper.TemplateMapper;
 import cn.hrk.spring.goods.service.ITemplateService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Example;
 
-import javax.xml.transform.Templates;
 import java.util.List;
 import java.util.Map;
 
@@ -47,7 +43,7 @@ public class TemplateServiceImpl implements ITemplateService {
      * @return
      */
     @PostMapping("/findList")
-    public List<Template> findList(Map<String, Object> searchMap) {
+    public List<Template> findList(@RequestBody Map<String, Object> searchMap) {
         Example example = createExample(searchMap);
         return templateMapper.selectByExample(example);
     }
@@ -59,7 +55,7 @@ public class TemplateServiceImpl implements ITemplateService {
      * @return
      */
     @PostMapping("/findPage")
-    public PageResult<Template> findPage(Map<String, Object> searchMap, @RequestParam("page") int page, @RequestParam("size") int size)
+    public PageResult<Template> findPage(@RequestBody Map<String, Object> searchMap, @RequestParam("page") int page, @RequestParam("size") int size)
     { PageHelper.startPage(page,size);
         Example example = createExample(searchMap);
         Page<Template> templates = (Page<Template>)

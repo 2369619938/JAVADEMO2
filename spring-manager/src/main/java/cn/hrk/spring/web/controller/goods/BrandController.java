@@ -2,7 +2,7 @@ package cn.hrk.spring.web.controller.goods;
 
 import cn.hrk.common.domain.PageResult;
 import cn.hrk.common.domain.R;
-import cn.hrk.spring.feign.BrandFeign;
+import cn.hrk.spring.goods.feign.BrandFeign;
 import cn.hrk.spring.goods.domain.Brand;
 import cn.hrk.spring.oss.FileR;
 import cn.hrk.spring.oss.OssUtils;
