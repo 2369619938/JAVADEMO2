@@ -120,29 +120,112 @@ public class OrderServiceImpl implements IOrderService
     private Example createExample(Map<String, Object> searchMap){
         Example example=new Example(Order.class);
         Example.Criteria criteria = example.createCriteria();
-        if(searchMap!=null){ // 品牌名称
-            if(searchMap.get("name")!=null &&
-                    !"".equals(searchMap.get("name"))){
-                criteria.andLike("name","%"+searchMap.get("name")+"%");
+        if(searchMap!=null){
+            // 数量合计
+            if (searchMap.get("totalNum") != null) {
+                criteria.andEqualTo("totalNum",searchMap.get("totalNum"));
             }
-            // 品牌图⽚地址
-            if(searchMap.get("image")!=null &&
-                    !"".equals(searchMap.get("image"))){
-                criteria.andLike("image","%"+searchMap.get("image")+"%");
+            // 金额合计
+            if (searchMap.get("totalMoney") != null) {
+                criteria.andEqualTo("totalMoney",searchMap.get("totalMoney"));
             }
-            // 品牌的⾸字⺟
-            if(searchMap.get("letter")!=null &&
-                    !"".equals(searchMap.get("letter"))){
+            // 优惠金额
+            if (searchMap.get("preMoney") != null) {
+                criteria.andEqualTo("preMoney",searchMap.get("preMoney"));
+            }
+            // 邮费
+            if (searchMap.get("postFee") != null) {
+                criteria.andEqualTo("postFee",searchMap.get("postFee"));
+            }
+            // 实付金额
+            if (searchMap.get("payMoney") != null) {
+                criteria.andEqualTo("payMoney",searchMap.get("payMoney"));
+            }
+            // 支付类型，1、在线支付、0 货到付款
+            if (searchMap.get("payType") != null) {
+                criteria.andEqualTo("payType",searchMap.get("payType"));
+            }
+            // 订单创建时间
+            if (searchMap.get("createTime") != null && !"".equals(searchMap.get("createTime"))) {
+                criteria.andLike("createTime", "%" + searchMap.get("createTime") + "%");
+            }
+            // 订单更新时间
+            if (searchMap.get("updateTime") != null && !"".equals(searchMap.get("updateTime"))) {
+                criteria.andLike("updateTime", "%" + searchMap.get("updateTime") + "%");
+            }
 
-                criteria.andLike("letter","%"+searchMap.get("letter")+"%");
+            // 付款时间
+            if (searchMap.get("payTime") != null && !"".equals(searchMap.get("payTime"))) {
+                criteria.andLike("payTime", "%" + searchMap.get("payTime") + "%");
             }
-            // 品牌id
-            if(searchMap.get("id")!=null ){
-                criteria.andEqualTo("id",searchMap.get("id"));
+            // 发货时间
+            if (searchMap.get("consignTime") != null && !"".equals(searchMap.get("consignTime"))) {
+                criteria.andLike("consignTime", "%" + searchMap.get("consignTime") + "%");
             }
-            // 排序
-            if(searchMap.get("seq")!=null ){
-                criteria.andEqualTo("seq",searchMap.get("seq"));
+            //交易完成时间
+            if (searchMap.get("endTime") != null && !"".equals(searchMap.get("endTime"))) {
+                criteria.andLike("endTime", "%" + searchMap.get("endTime") + "%");
+            }
+            // 交易关闭时间
+            if (searchMap.get("closeTime") != null && !"".equals(searchMap.get("closeTime"))) {
+                criteria.andLike("closeTime", "%" + searchMap.get("closeTime") + "%");
+            }
+
+            // 物流名称
+            if (searchMap.get("shippingName") != null && !"".equals(searchMap.get("shippingName"))) {
+                criteria.andLike("shippingName", "%" + searchMap.get("shippingName") + "%");
+            }
+            // 物流单号
+            if (searchMap.get("shippingCode") != null) {
+                criteria.andEqualTo("shippingCode",searchMap.get("shippingCode"));
+            }
+            // 用户名称
+            if (searchMap.get("username") != null && !"".equals(searchMap.get("username"))) {
+                criteria.andLike("username", "%" + searchMap.get("username") + "%");
+            }
+            // 买家留言
+            if (searchMap.get("buyerMessage") != null && !"".equals(searchMap.get("buyerMessage"))) {
+                criteria.andLike("buyerMessage", "%" + searchMap.get("buyerMessage") + "%");
+            }
+            // 是否评价
+            if (searchMap.get("buyerRate") != null) {
+                criteria.andEqualTo("buyerRate",searchMap.get("buyerRate"));
+            }
+            // 收货人
+            if (searchMap.get("receiverContact") != null && !"".equals(searchMap.get("receiverContact"))) {
+                criteria.andLike("receiverContact", "%" + searchMap.get("receiverContact") + "%");
+            }
+            // 收货人手机
+            if (searchMap.get("receiverMobile") != null && !"".equals(searchMap.get("receiverMobile"))) {
+                criteria.andLike("receiverMobile", "%" + searchMap.get("receiverMobile") + "%");
+            }
+            //收货人地址
+            if (searchMap.get("receiverAddress") != null && !"".equals(searchMap.get("receiverAddress"))) {
+                criteria.andLike("receiverAddress", "%" + searchMap.get("receiverAddress") + "%");
+            }
+            // 订单来源：1:web，2：app，3：微信公众号，4：微信小程序  5 H5手机页面
+            if (searchMap.get("sourceType") != null) {
+                criteria.andEqualTo("sourceType",searchMap.get("sourceType"));
+            }
+            // 交易流水号
+            if (searchMap.get("transactionId") != null) {
+                criteria.andEqualTo("transactionId",searchMap.get("transactionId"));
+            }
+            // 订单状态
+            if (searchMap.get("orderStatus") != null) {
+                criteria.andEqualTo("orderStatus",searchMap.get("orderStatus"));
+            }
+            // 支付状态
+            if (searchMap.get("payStatus") != null) {
+                criteria.andEqualTo("payStatus",searchMap.get("payStatus"));
+            }
+            // 发货状态
+            if (searchMap.get("consignStatus") != null) {
+                criteria.andEqualTo("consignStatus",searchMap.get("consignStatus"));
+            }
+            // 是否删除
+            if (searchMap.get("isDelete") != null) {
+                criteria.andEqualTo("isDelete",searchMap.get("isDelete"));
             }
         }
         return example;

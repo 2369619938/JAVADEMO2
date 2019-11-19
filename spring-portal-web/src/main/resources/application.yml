@@ -1,0 +1,66 @@
+server:
+  port: 8101
+spring:
+  application:
+    name: service-web-portal
+  servlet:
+    multipart:
+      max-file-size: 3MB
+      max-request-size: 3MB
+  main:
+    allow-bean-definition-overriding: true
+  thymeleaf:
+    #模板的模式，支持 HTML, XML TEXT JAVASCRIPT
+    mode: HTML5
+    #编码 可不用配置
+    encoding: UTF-8
+    #内容类别,可不用配置
+    #content-type: text/html
+    #开发配置为false,避免修改模板还要重启服务器
+    cache: false
+    #配置模板路径，默认是templates，可以不用配置
+    prefix: classpath:/templates/
+    suffix: .html
+  jackson:
+    date-format: yyyy-MM-dd
+    time-zone: GMT+8
+
+# 注册中心配置
+eureka:
+  client: #客户端注册进eureka服务列表内
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka
+      #defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+  instance:
+    instance-id: ${spring.application.name}:${server.port}
+    prefer-ip-address: true     #访问路径可以显示IP地址
+
+feign:
+  hystrix:
+    enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: 10000
+        readTimeout: 10000
+#hystrix的超时时间
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 9000
+
+aliyun:
+  file:
+    endpoint: http://oss-cn-hangzhou.aliyuncs.com
+    accessKeyId: LTAI4FofSy69yt7nKwm7cDcG
+    accessKeySecret: ezHERz1BcfyeuKnJ12m5wfB1wlLDEt
+    bucketName: ondreamer01
+    folder: upload
+    webUrl: https://ondreamer01.oss-cn-hangzhou.aliyuncs.com
+
+pagePath: /usr/local/item

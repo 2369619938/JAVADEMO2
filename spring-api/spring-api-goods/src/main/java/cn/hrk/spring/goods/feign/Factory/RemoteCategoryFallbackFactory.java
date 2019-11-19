@@ -66,6 +66,14 @@ public class RemoteCategoryFallbackFactory implements FallbackFactory<CategoryFe
             log.info("品牌删除失败，请重试！");
 return 0;
         }
+
+        @Override
+        public List<Map> findCategoryTree() {
+            log.info("品牌删除失败，请重试！");
+            return null;
+        }
+
+
     };
     }
 }

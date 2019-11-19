@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/spring-service/shop-service-activitys/shop-service-activitys.iml" filepath="$PROJECT_DIR$/spring-service/shop-service-activitys/shop-service-activitys.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-service/shop-service-goods/shop-service-goods.iml" filepath="$PROJECT_DIR$/spring-service/shop-service-goods/shop-service-goods.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-service/shop-service-orders/shop-service-orders.iml" filepath="$PROJECT_DIR$/spring-service/shop-service-orders/shop-service-orders.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-api/spring-api.iml" filepath="$PROJECT_DIR$/spring-api/spring-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-api/spring-api-activitys/spring-api-activitys.iml" filepath="$PROJECT_DIR$/spring-api/spring-api-activitys/spring-api-activitys.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-api/spring-api-goods/spring-api-goods.iml" filepath="$PROJECT_DIR$/spring-api/spring-api-goods/spring-api-goods.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-api/spring-api-orders/spring-api-orders.iml" filepath="$PROJECT_DIR$/spring-api/spring-api-orders/spring-api-orders.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-commons/spring-commons.iml" filepath="$PROJECT_DIR$/spring-commons/spring-commons.iml" />
@@ -15,6 +17,7 @@
       <module fileurl="file://$PROJECT_DIR$/spring-gateway/spring-gateway.iml" filepath="$PROJECT_DIR$/spring-gateway/spring-gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-manager/spring-manager.iml" filepath="$PROJECT_DIR$/spring-manager/spring-manager.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-parent.iml" filepath="$PROJECT_DIR$/spring-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-portal-web/spring-portal-web.iml" filepath="$PROJECT_DIR$/spring-portal-web/spring-portal-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-service/spring-service.iml" filepath="$PROJECT_DIR$/spring-service/spring-service.iml" />
     </modules>
   </component>

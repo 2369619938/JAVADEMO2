@@ -9,6 +9,7 @@ zuul:
   routes:
     service-goods : /goods/**
     service-orders : /orders/**
+    service-activitys : /activitys/**
     service-manager : /manager/**
 # 注册中⼼配置
 eureka:

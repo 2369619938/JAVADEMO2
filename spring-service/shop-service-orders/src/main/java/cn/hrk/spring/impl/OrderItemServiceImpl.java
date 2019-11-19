@@ -121,20 +121,13 @@ public class OrderItemServiceImpl implements IOrderItemService {
         Example.Criteria criteria = example.createCriteria();
         if(searchMap!=null){
             //相册名称
-            if(searchMap.get("title")!=null && !"".equals(searchMap.get("title"))){
-                criteria.andLike("title","%"+searchMap.get("title")+"%");
-            }
             //相册图片地址
             if(searchMap. get("image") !=null && !"".equals(searchMap. get("image"))){
                 criteria. andLike("image","%"+searchMap.get("image")+"%");
             }
-            //相册列表
-            if(searchMap.get("imageItems")!=null && !"".equals(searchMap.get("imageItems"))){
-                criteria.andLike("imageItems","%"+searchMap.get("imageItems")+"%");
-            }
             //品牌id
-            if(searchMap.get("id")!=null ){
-                criteria. andEqualTo("id", searchMap.get("id"));
+            if(searchMap.get("orderId")!=null ){
+                criteria. andEqualTo("orderId", searchMap.get("orderId"));
             }
         }
         return example;

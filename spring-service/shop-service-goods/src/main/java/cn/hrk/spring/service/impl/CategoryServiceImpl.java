@@ -1,5 +1,6 @@
 package cn.hrk.spring.service.impl;
 
+import cn.hrk.common.domain.CacheKey;
 import cn.hrk.common.domain.PageResult;
 import cn.hrk.spring.goods.domain.Category;
 import cn.hrk.spring.mapper.CategoryMapper;
@@ -7,9 +8,12 @@ import cn.hrk.spring.goods.service.ICategoryService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -102,7 +106,50 @@ public class CategoryServiceImpl implements ICategoryService {
       return   categoryMapper.deleteByPrimaryKey(id);
     }
 
-    /*
+    @RequestMapping("/findCategoryTree")
+    public List<Map> findCategoryTree() {
+        //从缓存提取分类
+        System.out.println("从缓存中提取Category");
+        List<Map> list = (List<Map>) redisTemplate.boundValueOps(CacheKey.CATEGROY_TYPE.name()).get();
+        if(list==null){
+            list = saveCategoryTreeToRedis();
+        }
+        return list;
+    }
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    public List<Map> saveCategoryTreeToRedis() {
+        //查询商品分类导航
+        Example example = new Example(Category.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("isShow", "1");
+        example.setOrderByClause("seq");
+        List<Category> categoryList = categoryMapper.selectByExample(example);
+        List<Map> categoryTree = findByParentId(categoryList, 0);
+        System.out.println("123");
+        //存入redis
+        if (categoryTree.size() > 0) {
+            redisTemplate.boundValueOps(CacheKey.CATEGROY_TYPE.name()).set(categoryTree);
+        }
+        return categoryTree;
+    }
+    private List<Map> findByParentId(List<Category> categoryList, Integer parentId ) {
+        List<Map> mapList = new ArrayList<Map>();
+        for (Category category : categoryList) {
+            if (category.getParentId().equals(parentId)) {
+                Map map = new HashMap();
+                map.put("name", category.getName());
+                map.put("menus", findByParentId(categoryList, category.getId()));
+                mapList.add(map);
+            }
+        }
+        return mapList;
+    }
+
+
+
+        /*
      *构建查询条件
      *@param searchMap
      *@return

@@ -9,6 +9,7 @@
         <module>spring-api</module>
         <module>spring-service</module>
         <module>spring-manager</module>
+        <module>spring-portal-web</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

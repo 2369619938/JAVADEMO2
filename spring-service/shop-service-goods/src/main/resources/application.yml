@@ -1,6 +1,29 @@
 server:
   port: 8002
 spring:
+  data:
+    elasticsearch:
+      host: 192.168.130.130
+      port: 9200
+  elasticsearch:
+    rest:
+      uris: 192.168.130.130:9200
+  redis:
+    port: 6379
+    # Redis服务器连接密码（默认为空）
+    password:
+    host: 192.168.130.130
+    database: 0
+    jedis:
+      pool:
+        #连接池最大连接数（使用负值表示没有限制）
+        max-active: 300
+        # 连接池中的最小空闲连接
+        max-idle: 100
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: 10000
+        # 连接超时时间（毫秒）
+        timeout: 5000
   application:
     name: service-goods
   #数据库连接信息
@@ -25,6 +48,7 @@ spring:
     testOnReturn: false
     poolPreparedStatements: true
     maxOpenPreparedStatements: 20
+
 # 注册中⼼配置
 eureka:
   client: #客户端注册进eureka服务列表内

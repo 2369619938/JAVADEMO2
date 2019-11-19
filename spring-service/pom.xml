@@ -14,6 +14,7 @@
     <modules>
         <module>shop-service-goods</module>
         <module>shop-service-orders</module>
+        <module>shop-service-activitys</module>
     </modules>
     <dependencies>
         <dependency>
@@ -24,6 +25,11 @@
         <dependency>
             <groupId>cn.hrk</groupId>
             <artifactId>spring-commons-core</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.hrk</groupId>
+            <artifactId>spring-commons-redis</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <!--配置中⼼客户端 -->
@@ -76,6 +82,8 @@
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional> <!-- 表示依赖不会传递 -->
         </dependency>
+
+
     </dependencies>
 
 </project>

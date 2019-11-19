@@ -7,8 +7,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="shop-service-activitys" />
         <module name="shop-service-goods" />
         <module name="shop-service-orders" />
+        <module name="spring-api-activitys" />
         <module name="spring-api-goods" />
         <module name="spring-api-orders" />
         <module name="spring-commons-core" />
@@ -17,12 +19,16 @@
         <module name="spring-eureka" />
         <module name="spring-gateway" />
         <module name="spring-manager" />
+        <module name="spring-portal-web" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="a" target="1.8" />
+      <module name="shop-service-activitys" target="1.8" />
       <module name="shop-service-goods" target="1.8" />
       <module name="shop-service-orders" target="1.8" />
       <module name="spring-api" target="1.8" />
+      <module name="spring-api-activitys" target="1.8" />
       <module name="spring-api-goods" target="1.8" />
       <module name="spring-api-orders" target="1.8" />
       <module name="spring-commons" target="1.8" />
@@ -33,13 +39,17 @@
       <module name="spring-gateway" target="1.8" />
       <module name="spring-manager" target="1.8" />
       <module name="spring-parent" target="1.8" />
+      <module name="spring-portal-web" target="1.8" />
       <module name="spring-service" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="a" options="-parameters" />
+      <module name="shop-service-activitys" options="-parameters" />
       <module name="shop-service-goods" options="-parameters" />
       <module name="shop-service-orders" options="-parameters" />
+      <module name="spring-api-activitys" options="-parameters" />
       <module name="spring-api-goods" options="-parameters" />
       <module name="spring-api-orders" options="-parameters" />
       <module name="spring-commons-core" options="-parameters" />
@@ -48,6 +58,7 @@
       <module name="spring-eureka" options="-parameters" />
       <module name="spring-gateway" options="-parameters" />
       <module name="spring-manager" options="-parameters" />
+      <module name="spring-portal-web" options="-parameters" />
     </option>
   </component>
 </project>

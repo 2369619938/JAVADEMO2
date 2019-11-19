@@ -24,4 +24,6 @@ public interface ICategoryService {
     public void update(@RequestBody Category Category);
     @GetMapping("/delete/{id}")
     public int delete(@PathVariable("id") Integer id);
+    @RequestMapping("/findCategoryTree")
+    public List<Map> findCategoryTree();
 }

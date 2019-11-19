@@ -3,4 +3,5 @@ package cn.hrk.common.constants;
 public interface ServiceNameConstants {
     String SERVICE_GOODS="service-goods";
     String SERVICE_ORDERS="service-orders";
+    String SERVICE_ACTIVITY="service-activity";
 }
